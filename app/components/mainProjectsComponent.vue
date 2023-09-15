@@ -1,9 +1,17 @@
 <script setup lang="ts">
+defineProps({
+  projects: {
+    type: Array,
+    default: null,
+  }
+})
+
+const apiUrl = useRuntimeConfig().public.apiUrl
 
 </script>
 
 <template>
-  <section>
+  <section v-if="projects">
     <div class="projects">
       <div class="paragraphe">
         <h3 class="paragraphe-title-span to-right">Nos projets</h3>
@@ -12,59 +20,22 @@
         </h1>
       </div>
       <div class="projects-grid">
-        <div class="projects-grid-project main__project">
+        <div v-for="project in projects" :key="project.id" class="projects-grid-project"
+             :class="{'main__project': project.id === 1,
+        'left-side__project': project.id === 2,
+        'right-side__project': project.id === 3
+        }">
           <div class="projects-grid-project-img">
-            <img src="/images/header-background.png" alt="Image d'un rêve">
+            <img :src="apiUrl+project.attributes.Poster.data.attributes.url" alt="Image d'un rêve">
           </div>
           <div class="projects-grid-project-content">
-            <h2>Nom du projet <span>- Production audiovisuel</span></h2>
+            <h2>{{ project.attributes.Name }} <span>- {{ project.attributes.Type }}</span></h2>
             <p>
-              Nous croyons fermement qu'une approche personnalisée est la
-              clé d'une collaboration fructueuse.
+              {{ project.attributes.Tagline }}
             </p>
             <div class="projects-grid-project-content-categories">
               <ul>
-                <li>Vidéo</li>
-                <li>Tournage</li>
-                <li>Média</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="projects-grid-project left-side__project">
-          <div class="projects-grid-project-img">
-            <img src="/images/header-background.png" alt="Image d'un rêve">
-          </div>
-          <div class="projects-grid-project-content">
-            <h2>Nom du projet <span>- Production audiovisuel</span></h2>
-            <p>
-              Nous croyons fermement qu'une approche personnalisée est la
-              clé d'une collaboration fructueuse.
-            </p>
-            <div class="projects-grid-project-content-categories">
-              <ul>
-                <li>Vidéo</li>
-                <li>Tournage</li>
-                <li>Média</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="projects-grid-project right-side__project">
-          <div class="projects-grid-project-img">
-            <img src="/images/header-background.png" alt="Image d'un rêve">
-          </div>
-          <div class="projects-grid-project-content">
-            <h2>Nom du projet <span>- Production audiovisuel</span></h2>
-            <p>
-              Nous croyons fermement qu'une approche personnalisée est la
-              clé d'une collaboration fructueuse.
-            </p>
-            <div class="projects-grid-project-content-categories">
-              <ul>
-                <li>Vidéo</li>
-                <li>Tournage</li>
-                <li>Média</li>
+                <li v-for="tag in project.attributes.Tags" :key="tag.id">{{ tag.name }}</li>
               </ul>
             </div>
           </div>
@@ -88,10 +59,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
+
   .paragraphe {
     .paragraphe-title {
       margin-bottom: 80px;
     }
+
     .paragraphe-title-span {
       position: absolute;
       top: -14px;
@@ -99,21 +72,25 @@
       @include right-position(16.66%, 20px);
     }
   }
+
   &-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: max-content max-content;
     gap: 20px;
+
     &-project {
       &-img {
         width: 100%;
         aspect-ratio: 16/9;
+
         img {
           width: 100%;
           height: 100%;
           object-fit: cover;
         }
       }
+
       &-content {
         h2 {
           font-family: 'DT Getai Grotesque Display', sans-serif;
@@ -121,6 +98,7 @@
           font-size: 30px;
           margin-bottom: 10px;
           text-transform: uppercase;
+
           span {
             font-family: 'Roboto', sans-serif;
             color: #BDBDBD;
@@ -128,16 +106,19 @@
             text-transform: initial;
           }
         }
+
         p {
           font-size: 12px;
           font-family: 'Lato', sans-serif;
           font-weight: 400;
           margin-bottom: 30px;
         }
+
         &-categories {
           ul {
             display: flex;
             margin-bottom: 20px;
+
             li {
               font-family: 'Roboto', sans-serif;
               font-size: 12px;

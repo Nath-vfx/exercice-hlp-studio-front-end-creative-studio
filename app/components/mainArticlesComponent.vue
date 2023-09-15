@@ -1,9 +1,18 @@
 <script setup lang="ts">
 
+const apiUrl = useRuntimeConfig().public.apiUrl
+
+defineProps({
+  articles: {
+    type: Array,
+    default: null
+  }
+})
+
 </script>
 
 <template>
-  <section>
+  <section v-if="articles">
     <div class="articles">
       <div class="paragraphe">
         <div class="left-box">
@@ -26,62 +35,15 @@
         </div>
       </div>
       <div class="articles__list">
-        <div class="articles__list-article">
+        <div v-for="article in articles" :key="article.id" class="articles__list-article">
           <div class="poster">
-            <img src="/images/landscape.png" alt="Une image d'un magnifique paysage" >
+            <img :src="apiUrl+article.attributes.Poster.data.attributes.url" alt="Une image d'un magnifique paysage" >
           </div>
           <div class="content">
-            <p class="content-over-title">Catégorie article</p>
-            <h3 class="content-title">Titre de l'article</h3>
+            <p class="content-over-title">{{article.attributes.category.data.attributes.Name}}</p>
+            <h3 class="content-title">{{article.attributes.Title}}</h3>
             <p class="content-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Quisque hendrerit odio nisl, at ullamcorper ligula consequat
-              a. Donec eget pellentesque dui.
-            </p>
-            <button class="cta">Lire plus</button>
-          </div>
-        </div>
-        <div class="articles__list-article">
-          <div class="poster">
-            <img src="/images/landscape.png" alt="Une image d'un magnifique paysage">
-          </div>
-          <div class="content">
-            <p class="content-over-title">Catégorie article</p>
-            <h3 class="content-title">Titre de l'article</h3>
-            <p class="content-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Quisque hendrerit odio nisl, at ullamcorper ligula consequat
-              a. Donec eget pellentesque dui.
-            </p>
-            <button class="cta">Lire plus</button>
-          </div>
-        </div>
-        <div class="articles__list-article">
-          <div class="poster">
-            <img src="/images/landscape.png" alt="Une image d'un magnifique paysage">
-          </div>
-          <div class="content">
-            <p class="content-over-title">Catégorie article</p>
-            <h3 class="content-title">Titre de l'article</h3>
-            <p class="content-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Quisque hendrerit odio nisl, at ullamcorper ligula consequat
-              a. Donec eget pellentesque dui.
-            </p>
-            <button class="cta">Lire plus</button>
-          </div>
-        </div>
-        <div class="articles__list-article">
-          <div class="poster">
-            <img src="/images/landscape.png" alt="Une image d'un magnifique paysage">
-          </div>
-          <div class="content">
-            <p class="content-over-title">Catégorie article</p>
-            <h3 class="content-title">Titre de l'article</h3>
-            <p class="content-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Quisque hendrerit odio nisl, at ullamcorper ligula consequat
-              a. Donec eget pellentesque dui.
+              {{article.attributes.Tagline}}
             </p>
             <button class="cta">Lire plus</button>
           </div>
@@ -176,9 +138,10 @@
           margin-bottom: 20px;
         }
         &-title {
-          font-family: 'DT Getai Grotesque Display', sans-serif;
-          font-size: 25px;
+          font-family: 'Bricolage Grotesque', sans-serif;
+          font-size: 28px;
           line-height: 48.5px;
+          font-weight: 900;
         }
         &-text {
           font-family: 'Lato', sans-serif;

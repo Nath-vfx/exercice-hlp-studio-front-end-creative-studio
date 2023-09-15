@@ -1,5 +1,16 @@
 <script setup lang="ts">
 
+let currentPage = ref(1);
+
+function switchPage() {
+  if(currentPage.value === 1) {
+    currentPage.value = 2
+    return;
+  } else {
+    currentPage.value = 1
+  }
+}
+
 </script>
 
 <template>
@@ -34,80 +45,36 @@
         </div>
       </div>
       <div class="customers-testimonies-list">
-        <div class="customers-testimonies-list__card">
-          <img
-              class="customers-testimonies-list__card-logo"
-              src="/icons/logo-fictif.svg"
-              alt=""
-          >
-          <h3 class="customers-testimonies-list__card-title">
-            Lorem ipsum dolor sit amet
-          </h3>
-          <p class="customers-testimonies-list__card-p">
-            <strong>Mauris sed ante a erat semper luctus.</strong> Maecenas
-            quis tortor nec odio maximus auctor.Mauris sed ante a erat
-            semper luctus. Maecenas quis tortor nec odio maximus auctor.
-          </p>
-          <div class="customers-testimonies-list__card-customer">
-            <p class="customers-testimonies-list__card-customer-name">
-              Nom Prénom
+        <div :class="{active: currentPage === 2}" class="sub">
+          <div v-for="testimony in 6" class="customers-testimonies-list__card">
+            <img
+                class="customers-testimonies-list__card-logo"
+                src="/icons/logo-fictif.svg"
+                alt=""
+            >
+            <h3 class="customers-testimonies-list__card-title">
+              Lorem ipsum dolor sit amet
+            </h3>
+            <p class="customers-testimonies-list__card-p">
+              <strong>Mauris sed ante a erat semper luctus.</strong> Maecenas
+              quis tortor nec odio maximus auctor.Mauris sed ante a erat
+              semper luctus. Maecenas quis tortor nec odio maximus auctor.
             </p>
-            <p class="customers-testimonies-list__card-customer-activity">
-              Activité professionnelle
-            </p>
+            <div class="customers-testimonies-list__card-customer">
+              <p class="customers-testimonies-list__card-customer-name">
+                Nom Prénom
+              </p>
+              <p class="customers-testimonies-list__card-customer-activity">
+                Activité professionnelle
+              </p>
+            </div>
           </div>
         </div>
-        <div class="customers-testimonies-list__card">
-          <img
-              class="customers-testimonies-list__card-logo"
-              src="/icons/logo-fictif.svg"
-              alt=""
-          >
-          <h3 class="customers-testimonies-list__card-title">
-            Lorem ipsum dolor sit amet
-          </h3>
-          <p class="customers-testimonies-list__card-p">
-            <strong>Mauris sed ante a erat semper luctus.</strong> Maecenas
-            quis tortor nec odio maximus auctor.Mauris sed ante a erat
-            semper luctus. Maecenas quis tortor nec odio maximus auctor.
-          </p>
-          <div class="customers-testimonies-list__card-customer">
-            <p class="customers-testimonies-list__card-customer-name">
-              Nom Prénom
-            </p>
-            <p class="customers-testimonies-list__card-customer-activity">
-              Activité professionnelle
-            </p>
-          </div>
-        </div>
-        <div class="customers-testimonies-list__card">
-          <img
-              class="customers-testimonies-list__card-logo"
-              src="/icons/logo-fictif.svg"
-              alt=""
-          >
-          <h3 class="customers-testimonies-list__card-title">
-            Lorem ipsum dolor sit amet
-          </h3>
-          <p class="customers-testimonies-list__card-p">
-            <strong>Mauris sed ante a erat semper luctus.</strong> Maecenas
-            quis tortor nec odio maximus auctor.Mauris sed ante a erat
-            semper luctus. Maecenas quis tortor nec odio maximus auctor.
-          </p>
-          <div class="customers-testimonies-list__card-customer">
-            <p class="customers-testimonies-list__card-customer-name">
-              Nom Prénom
-            </p>
-            <p class="customers-testimonies-list__card-customer-activity">
-              Activité professionnelle
-            </p>
-          </div>
-        </div>
-        <div class="customers-testimonies-list__navigation">
-          <div class="active">1</div>
-          /
-          <div class="">2</div>
-        </div>
+      </div>
+      <div class="customers-testimonies-list__navigation">
+        <div @click="switchPage" class="nav-page" :class="{active: currentPage === 1}">1</div>
+        /
+        <div @click="switchPage" class="nav-page" :class="{active: currentPage === 2}">2</div>
       </div>
     </div>
   </section>
@@ -117,6 +84,7 @@
 .customers-testimonies {
   background-color: #252525;
   padding: 127px 0;
+  position: relative;
   .paragraphe {
     color: white;
     display: flex;
@@ -188,12 +156,20 @@
     }
   }
   &-list {
-    display: grid;
-    margin: 0 16.66%;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: max-content;
-    margin-bottom: 80px;
-    position: relative;
+    margin: 0 16.66% 80px 16.66%;
+    clip-path: inset(0);
+    overflow-x: hidden;
+    div.sub {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: max-content;
+      column-gap: 20px;
+      transition: all .3s ease;
+      transform: translateX(0);
+    }
+    div.active {
+      transform: translateX(-100%) !important;
+    }
     &__card {
       background-color: white;
       border-top: #79BEC2 solid 14px;
@@ -246,7 +222,7 @@
       background-color: white;
       width: 304px;
       height: 78px;
-      bottom: -40px;
+      bottom: 15%;
       left: 50%;
       transform: translateX(-50%);
       justify-content: center;
@@ -257,7 +233,10 @@
       font-weight: 300;
       div {
         padding: 5px;
+        width: 22px;
+        height: 40px;
         position: relative;
+        transition: all .2s ease;
         &:nth-child(1) {
           &::before {
             content: url('/icons/left-arrow-black.svg');
@@ -283,7 +262,6 @@
         font-weight: 700;
         font-size: 20px;
       }
-
     }
   }
 }
