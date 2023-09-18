@@ -26,7 +26,7 @@ const apiUrl = useRuntimeConfig().public.apiUrl
         'right-side__project': project.id === 3
         }">
           <div class="projects-grid-project-img">
-            <img :src="apiUrl+project.attributes.Poster.data.attributes.url" alt="Image d'un rêve">
+            <img :src="project.attributes.Poster.data.attributes.url" alt="Image d'un rêve">
           </div>
           <div class="projects-grid-project-content">
             <h2>{{ project.attributes.Name }} <span>- {{ project.attributes.Type }}</span></h2>

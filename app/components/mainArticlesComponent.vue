@@ -37,7 +37,7 @@ defineProps({
       <div class="articles__list">
         <div v-for="article in articles" :key="article.id" class="articles__list-article">
           <div class="poster">
-            <img :src="apiUrl+article.attributes.Poster.data.attributes.url" alt="Une image d'un magnifique paysage" >
+            <img :src="article.attributes.Poster.data.attributes.url" alt="Une image d'un magnifique paysage" >
           </div>
           <div class="content">
             <p class="content-over-title">{{article.attributes.category.data.attributes.Name}}</p>

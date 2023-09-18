@@ -5,7 +5,7 @@ export default defineNuxtPlugin(nuxtApp => {
         baseURL: config.public.apiUrl,
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${config.public.apiJwt}`
+            Authorization: `Bearer ${config.public.apiJwt}`,
         },
     });
     return {
