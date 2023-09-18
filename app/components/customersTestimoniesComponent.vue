@@ -177,7 +177,11 @@ function switchPage() {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 413px;
+      max-width: 413px;
+      width: max-content;
+      @media (max-width: 1910px) {
+        max-width: 380px;
+      }
       height: 591px;
       &-logo {
         width: min-content;
