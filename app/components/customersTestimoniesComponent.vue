@@ -88,10 +88,9 @@ function switchPage() {
   .paragraphe {
     color: white;
     display: flex;
-    margin: 0 16.66%;
+    margin: 0 16.66% 80px 16.66%;
     flex-direction: row;
     position: relative;
-    margin-bottom: 80px;
     &-p {
       font-size: 14px;
       font-weight: 400;
@@ -163,12 +162,13 @@ function switchPage() {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       grid-template-rows: max-content;
-      column-gap: 20px;
+      justify-content: space-between;
       transition: all .3s ease;
       transform: translateX(0);
+      width: 200%;
     }
     div.active {
-      transform: translateX(-100%) !important;
+      transform: translateX(-50%) !important;
     }
     &__card {
       background-color: white;

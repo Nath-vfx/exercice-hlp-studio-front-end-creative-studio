@@ -107,8 +107,8 @@ footer {
         background: #79BEC2;
         border-radius: 21px;
         position: absolute;
-        top: 58%;
-        left: 48%;
+        bottom: 178px;
+        right: 64px;
       }
       &-text {
         h2 {
@@ -130,7 +130,6 @@ footer {
         font-weight: 500;
         font-size: 18px;
         padding: 10px 60px 10px 20px;
-        position: relative;
         margin-bottom: 60px;
         &::after {
           content: url('../icons/right-arrow-blue.svg');
