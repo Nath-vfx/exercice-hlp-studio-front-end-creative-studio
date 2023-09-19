@@ -6,11 +6,12 @@ const httpClient = useNuxtApp().$api
 
 const projects = ref([])
 const articles = ref([])
+const testimonies = ref([])
 
 const getProjects = async function () {
   await httpClient.get('/api/projects?populate=*&pagination[pageSize]=3')
       .then((response) => {
-        console.log(response.data)
+        console.log('Projects : ',response.data)
         projects.value = response.data.data
       }).catch((err) => {
         console.error(err)
@@ -20,8 +21,18 @@ const getProjects = async function () {
 const getArticles = async function () {
   await httpClient.get('/api/articles?populate=*&pagination[pageSize]=4')
       .then((response) => {
-        console.log(response.data.data)
+        console.log('Articles : ',response.data.data)
         articles.value = response.data.data
+      }).catch((err) => {
+        console.error(err)
+      })
+}
+
+const getTestimonies = async function() {
+  await httpClient.get('/api/testimonies?populate=*&pagination[pageSize]=6')
+      .then((response) => {
+        console.log('Témoignages : ',response.data.data)
+        testimonies.value = response.data.data
       }).catch((err) => {
         console.error(err)
       })
@@ -30,6 +41,7 @@ const getArticles = async function () {
 onMounted(() => {
   getProjects();
   getArticles();
+  getTestimonies();
 })
 
 definePageMeta({
@@ -44,7 +56,7 @@ definePageMeta({
   <main-projects-component :projects="projects"/>
   <main-c-t-acomponent :num="1"/>
   <main-customers-component/>
-  <customers-testimonies-component/>
+  <customers-testimonies-component :testimonies="testimonies"/>
   <main-articles-component :articles="articles"/>
   <main-c-t-acomponent :num="2"/>
 </main>

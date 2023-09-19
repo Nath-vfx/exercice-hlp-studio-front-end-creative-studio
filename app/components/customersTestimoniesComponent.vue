@@ -1,4 +1,10 @@
 <script setup lang="ts">
+defineProps({
+  testimonies: {
+    type: Array,
+    default: null,
+  }
+})
 
 let currentPage = ref(1);
 
@@ -23,13 +29,13 @@ function switchPage() {
             lls en parlent mieux que nous : paroles de clients satisfaits
           </h2>
           <ul class="customers-testimonies__customers-types">
-            <li class="customers-testimonies__customers-types-type-1">
+            <li class="customers-testimonies__customers-types type-1">
               Type client 1
             </li>
-            <li class="customers-testimonies__customers-types-type-2">
+            <li class="customers-testimonies__customers-types type-2">
               Type client 2
             </li>
-            <li class="customers-testimonies__customers-types-type-3">
+            <li class="customers-testimonies__customers-types type-3">
               Type client 3
             </li>
           </ul>
@@ -46,27 +52,27 @@ function switchPage() {
       </div>
       <div class="customers-testimonies-list">
         <div :class="{active: currentPage === 2}" class="sub">
-          <div v-for="testimony in 6" class="customers-testimonies-list__card">
+          <div v-for="testimony in testimonies" :key="testimony.id" class="customers-testimonies-list__card"
+               :class="{
+            'type-1-border': testimony.attributes.type.data.id === 1,
+            'type-2-border': testimony.attributes.type.data.id === 2,
+            'type-3-border': testimony.attributes.type.data.id === 3,
+          }">
             <img
                 class="customers-testimonies-list__card-logo"
                 src="/icons/logo-fictif.svg"
                 alt=""
             >
-            <h3 class="customers-testimonies-list__card-title">
-              Lorem ipsum dolor sit amet
-            </h3>
+            <h3 class="customers-testimonies-list__card-title">{{testimony.attributes.Title}}</h3>
             <p class="customers-testimonies-list__card-p">
-              <strong>Mauris sed ante a erat semper luctus.</strong> Maecenas
-              quis tortor nec odio maximus auctor.Mauris sed ante a erat
-              semper luctus. Maecenas quis tortor nec odio maximus auctor.
+              <strong>{{testimony.attributes.Tagline}}</strong>
+              {{testimony.attributes.Text}}
             </p>
             <div class="customers-testimonies-list__card-customer">
               <p class="customers-testimonies-list__card-customer-name">
-                Nom Prénom
+                {{testimony.attributes.customer.data.attributes.Surname}} {{testimony.attributes.customer.data.attributes.Name}}
               </p>
-              <p class="customers-testimonies-list__card-customer-activity">
-                Activité professionnelle
-              </p>
+              <p class="customers-testimonies-list__card-customer-activity">{{testimony.attributes.customer.data.attributes.Professional_activity}}</p>
             </div>
           </div>
         </div>
@@ -136,21 +142,6 @@ function switchPage() {
         border-radius: 21px;
         left: -28px;
         bottom: 2px;
-      }
-    }
-    &-type-1{
-      &::before{
-        background: #79BEC2;
-      }
-    }
-    &-type-2{
-      &::before{
-        background: #B53B8E;
-      }
-    }
-    &-type-3{
-      &::before{
-        background: #8CC279;
       }
     }
   }
@@ -269,4 +260,31 @@ function switchPage() {
     }
   }
 }
+
+.type-1{
+  &::before{
+    background: #79BEC2;
+  }
+  &-border {
+    border-top: #79BEC2 solid 14px;
+  }
+}
+.type-2{
+  &::before{
+    background: #B53B8E;
+  }
+  &-border {
+    border-top: #B53B8E solid 14px;
+  }
+}
+.type-3{
+  &::before{
+    background: #8CC279;
+  }
+  &-border {
+    border-top: #8CC279 solid 14px;
+  }
+}
+
+
 </style>
